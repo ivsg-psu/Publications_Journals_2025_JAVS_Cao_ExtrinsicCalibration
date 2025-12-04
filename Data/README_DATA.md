@@ -1,43 +1,63 @@
-# README_DATA.md
-Last update:  2022-07-08 by S. Brennan
+# README_DATA.md  
+Last update: 2025-08-04 by Xinyu Cao  
 
-This readme is based on the IVSG README template in the repository: Errata_Tutorials_ReadmeTemplate. The goal of a readme is to guide users by providing information on how to get started, installations, Help and other information about your project. In IVSG, we typically edit markdown files (such as README.md) in Visual Code Studio (vscode) because it allows preview of the markdown. To see the preview in vscode, you can right-click on the editor Tab and select Open Preview (Ctrl+Shift+V) or use the Command Palette (Ctrl+Shift+P) to run the Markdown: Open Preview to the Side command (Ctrl+K V). In general, opening the preview to the side is easier to edit (Ctrl+K V).
-
-## Description
-
-Explain what data exists in this area. Your description should explain concisely - in one paragraph - the reasons for the data: what does it contain? why was it saved? who created it? Which codes or methods created the data? when? how is it typically used? when was it last updated? what are the major releases of the data? 
-
-For lengthy explanations, use the wiki feature and link to it here at the bottom of the description.
+This readme is based on the IVSG README template in the repository: Errata_Tutorials_ReadmeTemplate. The goal of a readme is to guide users by providing information on how to get started, installations, help, and other information about your data.
 
 ---
 
-## Getting Started
+## 📂 Description
 
-* Which file should someone start with to see how the data is used?
+This folder contains LiDAR calibration and test datasets used for evaluating extrinsic calibration between a Velodyne LiDAR and GPS reference frame using spherical targets.  
+
+Each dataset is stored as an individual `.mat` file containing a **single struct** variable named `data`. These files were generated from raw static LiDAR scans, processed and split using MATLAB scripts (e.g., `fcn_save_example_calibration_datasets.m`), and are loaded using `fcn_load_example_calibration_datasets.m`.  
+
+The data is typically used as input to the full calibration pipeline (e.g., `Sphere Target Fitting and LiDAR Calibration`) to perform target fitting, transformation estimation, and validation.
+
+---
+
+## 🚀 Getting Started
+
+To load all datasets in this folder as a cell array of structs, run:
+
+```matlab
+datasets_cell = fcn_load_example_calibration_datasets('Data/Calibration');
+```
+
+This will return a 1xN cell array, where each element corresponds to one .mat file in the folder.
 
 ### Dependencies
 
-* Codes which use this data?
-* Other data that must be installed?
-* Other codes that are needed to use the data?
+* Function required:
+`fcn_load_example_calibration_datasets.m`
+* Used by:
+  `script_demo_LiDARCalibration`  
+* Other requirements:
+MATLAB R2021a or newer recommended
+No additional toolboxes required for loading
 
 ### Installing
 
 * The install instructios area should note:
 
-1. what type and version of software is needed? (MATLAB 2021a, ROS Kinetic, Ubuntu 20.04LTS, Windows 11?)
-2. what file to read first?
-3. what code to execute first?
-4. how does one know that the installation worked after unning the code?
-
-* Hopefully, this information is on the main README.md for your code repo.
+1. Software: MATLAB R2021a or newer
+2. Data folder: Data/Calibration/ or Data/Test/
+3. First script to run: `script_demo_LiDARCalibration`
 
 ### Executing program
-* This area should explain how to run the code to see and confirm the data's integrity.
+* To verify the integrity of the dataset:
+
+```cpp
+datasets_cell = fcn_load_example_calibration_datasets('Data/Calibration');
+
+% View a sample
+disp(datasets_cell{1});
+```
+
+If the data loads successfully and contains expected fields (e.g., GPS, LiDAR, etc.), the dataset is valid.
 
 ---
 ## Help
 
 ### Documentation
 
-- Tell the user where in the documentation to find information on how to use the data.
+- For more information please go through the main README of the repo.
